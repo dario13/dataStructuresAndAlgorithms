@@ -126,7 +126,4 @@ graph.addEdge('c', 'e')
 graph.addEdge('d', 'f')
 graph.addEdge('f', 'g')
 
-console.log(graph.bidirectionalSearch())
-
-//console.log(graph.getAdjacent())
-//console.log(graph.getVertices())
+console.log(graph.bidirectionalSearch('a', 'g'))
