@@ -2,12 +2,14 @@ class Graph {
     constructor() {
         this.vertices = []
         this.adjacent = {}
+        this.visited = {}
         this.edges = 0
     }
 
     addVertex(v) {
         this.vertices.push(v)
         this.adjacent[v] = []
+        this.visited[v] = false
     }
 
     addEdge(v, w) {
@@ -24,6 +26,14 @@ class Graph {
         return this.adjacent
     }
 
+    itWasVisited(vertex) {
+        return this.visited[vertex]
+    }
+
+    markAsVisited(vertex) {
+        this.visited[vertex] = true
+    }
+
     bfs(goal, v = this.vertices[0]) {
         if (!v) return []
 
@@ -34,15 +44,15 @@ class Graph {
 
         while (queue.length > 0 && !goalReached) {
             const currentVertex = queue.pop()
+            this.markAsVisited(currentVertex)
             path.push(currentVertex)
 
             for (let i = 0; i < this.adjacent[currentVertex].length; i++) {
                 const adjVertex = this.adjacent[currentVertex][i]
-                const itWasOpenedOrInQueue = path
-                    .concat(queue)
-                    .find((value) => value === adjVertex)
-
-                if (!itWasOpenedOrInQueue) queue.unshift(adjVertex)
+                if (!this.itWasVisited(adjVertex)) {
+                    this.markAsVisited(adjVertex)
+                    queue.unshift(adjVertex)
+                }
             }
 
             goalReached = currentVertex === goal ? true : false
@@ -72,7 +82,7 @@ graph.addEdge('c', 'e')
 graph.addEdge('d', 'f')
 graph.addEdge('f', 'g')
 
-console.log(graph.bfs('e'))
+console.log(graph.bfs('g'))
 
 //console.log(graph.getAdjacent())
 //console.log(graph.getVertices())
