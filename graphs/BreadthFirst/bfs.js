@@ -47,11 +47,10 @@ class Graph {
             this.markAsVisited(currentVertex)
             path.push(currentVertex)
 
-            for (let i = 0; i < this.adjacent[currentVertex].length; i++) {
-                const adjVertex = this.adjacent[currentVertex][i]
-                if (!this.itWasVisited(adjVertex)) {
-                    this.markAsVisited(adjVertex)
-                    queue.unshift(adjVertex)
+            for (let adj of this.adjacent[currentVertex]) {
+                if (!this.itWasVisited(adj)) {
+                    this.markAsVisited(adj)
+                    queue.unshift(adj)
                 }
             }
 
